@@ -20,6 +20,7 @@ import io.confluent.intellijplugin.client.KafkaConstants
 import io.confluent.intellijplugin.common.models.RegistrySchemaInEditor
 import io.confluent.intellijplugin.core.monitoring.data.model.ObjectDataModel
 import io.confluent.intellijplugin.core.monitoring.data.storage.ObjectDataModelStorage
+import io.confluent.intellijplugin.consumer.editor.KafkaConsumerSettings
 import io.confluent.intellijplugin.core.monitoring.data.storage.RootDataModelStorage
 import io.confluent.intellijplugin.toolwindow.config.KafkaClusterConfig
 import io.confluent.intellijplugin.core.util.runAsync
@@ -902,11 +903,9 @@ class CCloudClusterDataManager(
 
     override fun supportsInSyncReplicasData(): Boolean = false
 
-    // Consumer panel feature overrides - CCloud doesn't support these features yet
-
     override fun supportsConsumerGroups(): Boolean = false
-    override fun supportsAdvancedSettings(): Boolean = false
-    override fun presetConnectionTag() = "ccloud"
+    override fun presetConnectionTag(): String = "ccloud"
+    override fun supportedConsumerProperties(): Set<String> = KafkaConsumerSettings.CCLOUD_PROPERTIES
     fun getDataPlaneCache(): DataPlaneCache = dataPlaneCache
 
     /** Cancel all ongoing enrichment jobs (topics, schemas, partitions). Called when refresh is cancelled. */

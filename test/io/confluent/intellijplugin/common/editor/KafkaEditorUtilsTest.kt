@@ -2,6 +2,8 @@ package io.confluent.intellijplugin.common.editor
 
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.testFramework.junit5.TestApplication
+import io.confluent.intellijplugin.common.models.KafkaFieldType
+import io.confluent.intellijplugin.registry.KafkaRegistryFormat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -88,6 +90,31 @@ class KafkaEditorUtilsTest {
             }
 
             assertEquals("gamma", comboBox.selectedItem)
+        }
+    }
+
+    @Nested
+    inner class `getValueAsString` {
+
+        @Test
+        fun `should decode messagepack byte array to compact json string`() {
+            val json = """{"a":1,"b":"two"}"""
+
+            val result = KafkaEditorUtils.getValueAsString(
+                KafkaFieldType.MESSAGEPACK, json.toByteArray(), KafkaRegistryFormat.UNKNOWN
+            )
+
+            // Decoded to compact JSON (no indentation or newlines) via tryFormatJsonCompact.
+            assertEquals(json, result)
+        }
+
+        @Test
+        fun `should return empty string for null value`() {
+            val result = KafkaEditorUtils.getValueAsString(
+                KafkaFieldType.MESSAGEPACK, null, KafkaRegistryFormat.UNKNOWN
+            )
+
+            assertEquals("", result)
         }
     }
 }

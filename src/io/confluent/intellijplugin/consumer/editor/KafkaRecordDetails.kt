@@ -281,7 +281,7 @@ internal class KafkaRecordDetails(project: Project, parentDisposable: Disposable
     ) {
         val visibleFieldType = getFieldType(viewerType, fieldType, jsonField)
         if (visibleFieldType == FieldViewerType.JSON) {
-            jsonField.setText(KafkaEditorUtils.tryFormatJson(value), JsonLanguage.INSTANCE)
+            jsonField.setText(KafkaEditorUtils.tryFormatJson(value, pretty = true), JsonLanguage.INSTANCE)
         } else {
             jsonField.setText(value, PlainTextLanguage.INSTANCE)
         }

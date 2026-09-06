@@ -104,7 +104,6 @@ class KafkaEditorUtilsTest {
                 KafkaFieldType.MESSAGEPACK, json.toByteArray(), KafkaRegistryFormat.UNKNOWN
             )
 
-            // Decoded to compact JSON (no indentation or newlines) via tryFormatJsonCompact.
             assertEquals(json, result)
         }
 

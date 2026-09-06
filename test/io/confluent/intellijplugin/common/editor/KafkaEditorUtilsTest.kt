@@ -109,6 +109,18 @@ class KafkaEditorUtilsTest {
         }
 
         @Test
+        fun `should compact messagepack string with spaces around braces`() {
+            val input = """ [ "a" ] """
+            val expected = """["a"]"""
+
+            val result = KafkaEditorUtils.getValueAsString(
+                KafkaFieldType.MESSAGEPACK, input, KafkaRegistryFormat.UNKNOWN
+            )
+
+            assertEquals(expected, result)
+        }
+
+        @Test
         fun `should return empty string for null value`() {
             val result = KafkaEditorUtils.getValueAsString(
                 KafkaFieldType.MESSAGEPACK, null, KafkaRegistryFormat.UNKNOWN

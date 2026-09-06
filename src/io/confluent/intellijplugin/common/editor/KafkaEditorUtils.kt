@@ -83,8 +83,8 @@ object KafkaEditorUtils {
             value.toString()
         }
 
-        type == KafkaFieldType.MESSAGEPACK && value is ByteArray -> try {
-            tryFormatJson(String(value, Charsets.UTF_8))
+        type == KafkaFieldType.MESSAGEPACK -> try {
+            tryFormatJson(if (value is ByteArray) String(value, Charsets.UTF_8) else value.toString())
         } catch (e: Exception) {
             value.toString()
         }
